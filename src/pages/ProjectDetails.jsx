@@ -36,8 +36,8 @@ export default function ProjectDetails() {
     const initialData = [
         {
             number: 1,
-            id: "godrej-arden",
-            campaign_name: "Godrej Arden",
+            id: "birla-1",
+            campaign_name: "Birla 1",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",
@@ -53,8 +53,8 @@ export default function ProjectDetails() {
         },
         {
             number: 2,
-            id: "eldeco-omicron",
-            campaign_name: "Eldeco Omicron",
+            id: "birla-2",
+            campaign_name: "Birla 2",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "paused",
@@ -71,8 +71,8 @@ export default function ProjectDetails() {
         },
         {
             number: 3,
-            id: "birla-trimaya",
-            campaign_name: "Birla Trimaya",
+            id: "birla-3",
+            campaign_name: "Birla 3",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",
@@ -88,8 +88,8 @@ export default function ProjectDetails() {
         },
         {
             number: 4,
-            id: "prestige-lakeside",
-            campaign_name: "Prestige Lakeside",
+            id: "birla-4",
+            campaign_name: "Birla 4",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",
@@ -105,8 +105,8 @@ export default function ProjectDetails() {
         },
         {
             number: 5,
-            id: "sobha-dream-acres",
-            campaign_name: "Sobha Dream Acres",
+            id: "birla-5",
+            campaign_name: "Birla 5",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",
@@ -122,8 +122,8 @@ export default function ProjectDetails() {
         },
         {
             number: 6,
-            id: "DLF-luxury-homes",
-            campaign_name: "DLF Luxury Homes",
+            id: "birla-6",
+            campaign_name: "Birla 6",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",
@@ -139,8 +139,8 @@ export default function ProjectDetails() {
         },
         {
             number: 7,
-            id: "brigade-orchards",
-            campaign_name: "Brigade Orchards",
+            id: "birla-7",
+            campaign_name: "Birla 7",
             location: "Noida NCR",
             ad_account: "preeti sharma",
             status: "Live",

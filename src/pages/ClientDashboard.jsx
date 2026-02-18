@@ -4,12 +4,7 @@ import birlalogo from "../assets/project-logo/godrej.png";
 import prestigelogo from "../assets/project-logo/prestige.png";
 import { A, } from "@solidjs/router";
 export default function ClientDashboard() {
-    const MIN_PRICE = 50000;
-    const MAX_PRICE = 500000;
-
-    const [minPrice, setMinPrice] = createSignal(MIN_PRICE);
-    const [maxPrice, setMaxPrice] = createSignal(MAX_PRICE);
-
+    const [viewType, setViewType] = createSignal("table"); // "grid" | "table"
     const projects = [
         {
             id: 1,
@@ -17,10 +12,13 @@ export default function ClientDashboard() {
             logo: birlalogo,
             location: "Bangalore",
             budget: 100000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 3,
+            pausedCampaigns: 1,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
         {
             id: 2,
@@ -28,10 +26,13 @@ export default function ClientDashboard() {
             logo: prestigelogo,
             location: "Bangalore",
             budget: 95000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 2,
+            pausedCampaigns: 2,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
         {
             id: 3,
@@ -39,10 +40,13 @@ export default function ClientDashboard() {
             logo: birlalogo,
             location: "Bangalore",
             budget: 85000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 1,
+            pausedCampaigns: 2,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
         {
             id: 4,
@@ -50,10 +54,13 @@ export default function ClientDashboard() {
             logo: godrejlogo,
             location: "Bangalore",
             budget: 98000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 1,
+            pausedCampaigns: 1,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
         {
             id: 5,
@@ -61,10 +68,13 @@ export default function ClientDashboard() {
             logo: prestigelogo,
             location: "Bangalore",
             budget: 90000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 1,
+            pausedCampaigns: 2,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
         {
             id: 6,
@@ -72,24 +82,22 @@ export default function ClientDashboard() {
             logo: birlalogo,
             location: "Bangalore",
             budget: 92000,
+            leadsgenerated: 10,
             type: "Residential",
             activeCampaigns: 1,
+            pausedCampaigns: 2,
             status: "active",
             url: "/all-campaigns",
+            cpl: 200
         },
     ];
 
     const filteredProjects = createMemo(() =>
         projects.filter(
             (p) =>
-                p.status === "active" &&
-                p.budget >= minPrice() &&
-                p.budget <= maxPrice()
+                p.status === "active"
         )
     );
-
-
-
     return (
         <section class="w-full px-4 sm:px-6 lg:px-8 py-6">
 
@@ -104,41 +112,40 @@ export default function ClientDashboard() {
                     </p>
                 </div>
 
-                {/* Price Filter */}
-                <div class="mb-6 rounded-xl p-4  w-[400px]">
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                        Filter by Budget
-                    </h3>
-
-                    {/* Selected Range */}
-                    <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-                        <span>₹ {minPrice().toLocaleString("en-IN")}</span>
-                        <span>₹ {maxPrice().toLocaleString("en-IN")}</span>
-                    </div>
-
-                    {/* Sliders */}
-                    <div class="relative h-6">
-                        {/* Min Range */}
-                        <input
-                            type="range"
-                            min={MIN_PRICE}
-                            max={MAX_PRICE}
-                            value={minPrice()}
-                            onInput={(e) => setMinPrice(Math.min(+e.target.value, maxPrice() - 1000))}
-                            class="absolute w-full h-1 bg-green-500 appearance-none pointer-events-auto accent-green-600"
-                        />
-
-                        {/* Max Range */}
-                        <input
-                            type="range"
-                            min={MIN_PRICE}
-                            max={MAX_PRICE}
-                            value={maxPrice()}
-                            onInput={(e) => setMaxPrice(Math.max(+e.target.value, minPrice() + 1000))}
-                            class="absolute w-full h-1 bg-green-500 appearance-none pointer-events-auto accent-green-600"
-                        />
-                    </div>
+                <div class="flex items-center gap-2">
+                    <button
+                        onClick={() => setViewType("table")}
+                        class={`p-2 rounded-lg border ${viewType() === "table"
+                            ? "bg-green-600 text-white"
+                            : "bg-white text-gray-600"
+                            }`}
+                        title="Table View"
+                    >
+                        {/* Table Icon */}
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <line x1="4" y1="6" x2="20" y2="6" />
+                            <line x1="4" y1="12" x2="20" y2="12" />
+                            <line x1="4" y1="18" x2="20" y2="18" />
+                        </svg>
+                    </button>
+                    <button
+                        onClick={() => setViewType("grid")}
+                        class={`p-2 rounded-lg border ${viewType() === "grid"
+                            ? "bg-green-600 text-white"
+                            : "bg-white text-gray-600"
+                            }`}
+                        title="Grid View"
+                    >
+                        {/* Grid Icon */}
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                        </svg>
+                    </button>
                 </div>
+
 
 
                 {/* <div class="text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -146,126 +153,187 @@ export default function ClientDashboard() {
                 </div> */}
             </div>
 
-            {/* Projects Grid */}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <For each={filteredProjects()}>
-                    {(project) => (
-                        <div
-                            class="
+
+            <Show
+                when={viewType() === "grid"}
+                fallback={
+                    /* TABLE VIEW */
+                    <div class="overflow-x-auto bg-white dark:bg-gray-900 rounded-xl border">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-100 dark:bg-gray-800">
+                                <tr class="[&_th]:text-center [&_th:first-child]:text-left">
+                                    <th class="p-3">Project</th>
+                                    <th class="p-3">Location</th>
+                                    <th class="p-3">Type</th>
+                                    <th class="p-3">Budget</th>
+                                    <th class="p-3">CPL</th>
+                                    <th class="p-3">Leads Generated</th>
+                                    <th class="p-3">Active Campaigns</th>
+                                    <th class="p-3">Paused Campaigns</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <For each={filteredProjects()}>
+                                    {(project) => (
+                                        <tr class="[&_td]:text-center [&_td:first-child]:text-left border-t hover:bg-gray-50 dark:hover:bg-gray-800">
+                                            <td class="p-2 flex items-center gap-2">
+                                                <div class="rounded bg-gray-100 dark:bg-gray-300 p-1 px-2">
+                                                    <img src={project.logo} class="w-10 h-10  " />
+                                                </div>
+                                                <A href={project.url} class="text-blue-600 dark:text-blue-400">
+                                                    {project.name}
+                                                </A>
+                                            </td>
+                                            <td class="p-2">{project.location}</td>
+                                            <td class="p-2">{project.type}</td>
+                                            <td class="p-2">
+                                                ₹ {project.budget.toLocaleString("en-IN")}
+                                            </td>
+                                            <td class="p-2">{project.cpl}</td>
+                                            <td class="p-2">{project.leadsgenerated}</td>
+                                            <td class="p-2 text-center">
+                                                {project.activeCampaigns}
+                                            </td>
+                                            <td class="p-2 text-center">
+                                                {project.pausedCampaigns}
+                                            </td>
+
+                                        </tr>
+                                    )}
+                                </For>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            >
+                {/* GRID VIEW (Your Existing Cards – unchanged) */}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <For each={filteredProjects()}>
+                        {(project) => (
+                            <For each={filteredProjects()}>
+                                {(project) => (
+                                    <div
+                                        class="
                                 group rounded-xl border border-gray-200 dark:border-gray-700
                                 bg-white dark:bg-gray-900
                                 p-4 transition-all duration-300 shadow-md
                                 hover:shadow-lg hover:-translate-y-1
                                 "
-                        >
+                                    >
 
-                            {/* Header */}
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-3">
+                                        {/* Header */}
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-center gap-3">
 
-                                    {/* Project Logo */}
+                                                {/* Project Logo */}
 
-                                    <div
-                                        class="
+                                                <div
+                                                    class="
                                             h-12 w-12 rounded-lg
                                             flex items-center justify-center
                                             bg-gray-100 
                                             shadow-sm
                                         "
-                                    >
-                                        <img
-                                            src={project.logo}
-                                            alt={project.name}
-                                            class=" object-cover"
-                                        />
-                                    </div>
+                                                >
+                                                    <img
+                                                        src={project.logo}
+                                                        alt={project.name}
+                                                        class=" object-cover"
+                                                    />
+                                                </div>
 
-                                    {/* Title */}
-                                    <div>
-                                        <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">
-                                            {project.name}
-                                        </h3>
-                                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                                            Property Type · {project.type}
-                                        </p>
-                                    </div>
-                                </div>
+                                                {/* Title */}
+                                                <div>
+                                                    <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">
+                                                        {project.name}
+                                                    </h3>
+                                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                                        Property Type · {project.type}
+                                                    </p>
+                                                </div>
+                                            </div>
 
-                                {/* Status */}
-                                <span class="flex items-center gap-1 text-sm font-medium text-green-600 dark:text-green-400">
-                                    <span class="h-2 w-2 rounded-full bg-green-500"></span>
-                                    Active
-                                </span>
-                            </div>
+                                            {/* Status */}
+                                            <span class="flex items-center gap-1 text-sm font-medium text-green-600 dark:text-green-400">
+                                                <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                                                Active
+                                            </span>
+                                        </div>
 
-                            {/* Location */}
-                            <div class="flex justify-between">
-                                <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    {project.location}
-                                </p>
-                                <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                        {/* Location */}
+                                        <div class="flex justify-between">
+                                            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                {project.location}
+                                            </p>
+                                            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 flex items-center gap-1">
 
-                                    ₹ {project.budget.toLocaleString("en-IN")}
-                                </p>
-                            </div>
+                                                ₹ {project.budget.toLocaleString("en-IN")}
+                                            </p>
+                                        </div>
 
-                            {/* Divider */}
-                            <div class="my-4 border-t border-gray-200 dark:border-gray-700"></div>
+                                        {/* Divider */}
+                                        <div class="my-4 border-t border-gray-200 dark:border-gray-700"></div>
 
-                            {/* Campaign Stats */}
-                            <div class="grid grid-cols-2 gap-4 text-sm ">
-                                <div class="bg-green-50 dark:bg-gray-800 rounded-lg p-3">
-                                    <p class="text-sm text-green-700 dark:text-green-500">
-                                        Active Campaigns
-                                    </p>
-                                    <p class="text-lg font-bold text-gray-900 dark:text-white">
-                                        {project.activeCampaigns}
-                                    </p>
-                                </div>
+                                        {/* Campaign Stats */}
+                                        <div class="grid grid-cols-2 gap-4 text-sm ">
+                                            <div class="bg-green-50 dark:bg-gray-800 rounded-lg p-3">
+                                                <p class="text-sm text-green-700 dark:text-green-500">
+                                                    Active Campaigns
+                                                </p>
+                                                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                                                    {project.activeCampaigns}
+                                                </p>
+                                            </div>
 
-                                <div class="bg-red-50 dark:bg-gray-800 rounded-lg p-3">
-                                    <p class="text-sm text-red-500">
-                                        Paused Campaigns
-                                    </p>
-                                    <p class="text-lg font-bold text-gray-900 dark:text-white">
-                                        {project.pausedCampaigns}
-                                    </p>
-                                </div>
-                            </div>
+                                            <div class="bg-red-50 dark:bg-gray-800 rounded-lg p-3">
+                                                <p class="text-sm text-red-500">
+                                                    Paused Campaigns
+                                                </p>
+                                                <p class="text-lg font-bold text-gray-900 dark:text-white">
+                                                    {project.pausedCampaigns}
+                                                </p>
+                                            </div>
+                                        </div>
 
-                            {/* Footer CTA */}
+                                        {/* Footer CTA */}
 
-                            {/* Footer CTA */}
-                            <A
-                                href={project.url}
-                                class="
+                                        {/* Footer CTA */}
+                                        <A
+                                            href={project.url}
+                                            class="
                                         mt-4 w-full
                                         text-primary-600 dark:text-primary-400
                                         hover:text-primary-700 dark:hover:text-primary-300
                                         font-medium text-sm
                                         flex items-center justify-center gap-1
                                     "
-                            >
-                                View Details
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </A>
-                        </div>
-                    )}
-                </For>
-            </div>
+                                        >
+                                            View Details
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M9 5l7 7-7 7"
+                                                />
+                                            </svg>
+                                        </A>
+                                    </div>
+                                )}
+                            </For>
+
+                        )}
+                    </For>
+                </div>
+            </Show>
+
 
 
             {/* Empty State */}
